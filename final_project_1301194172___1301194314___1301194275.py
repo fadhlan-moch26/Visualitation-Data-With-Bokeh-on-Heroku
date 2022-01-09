@@ -26,7 +26,6 @@ benua_list = data.Benua.unique().tolist()
 
 mapper = CategoricalColorMapper(factors=benua_list, palette=Spectral6)
 
-data.tail()
 
 # Make the ColumnDataSource: source
 source = ColumnDataSource(data={
