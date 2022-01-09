@@ -1,4 +1,3 @@
-
 import pandas as pd
 from bokeh.io import curdoc
 from bokeh.plotting import figure
@@ -10,9 +9,6 @@ from bokeh.models import Slider, Select
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns 
-import warnings
-warnings.filterwarnings("ignore")
-
 
 # Read dataset
 df = pd.read_csv("country_wise_latest.csv")
@@ -25,7 +21,6 @@ data.set_index('Negara', inplace=True)
 benua_list = data.Benua.unique().tolist()
 
 mapper = CategoricalColorMapper(factors=benua_list, palette=Spectral6)
-
 
 # Make the ColumnDataSource: source
 source = ColumnDataSource(data={
@@ -50,7 +45,6 @@ plot.legend.location = 'top_left'
 # Define the callback function: update_plot
 def update_plot(attr, old, new):
     # set the `negara` name to `slider.value` and `source.data = new_data`
-    negara = slider.value
     x = x_select.value
     y = y_select.value
     # Label axes of plot
@@ -58,21 +52,16 @@ def update_plot(attr, old, new):
     plot.yaxis.axis_label = y
     # new data
     new_data = {
-    'x'       : data.loc[negara][x],
-    'y'       : data.loc[negara][y],
-    'Kasus Kematian' : data.loc[negara].Kasus_Kematian,
-    'Aktif'     : data.loc[negara].Aktif,
-    'Benua'  : data.loc[negara].Benua,
+    'x'       : data.loc[x],
+    'y'       : data.loc[y],
+    'Kasus Kematian' : data.Kasus_Kematian,
+    'Aktif'     : data.Aktif,
+    'Benua'  : data.Benua,
     }
     source.data = new_data
     
     # Add title to figure: plot.title.text
     plot.title.text = 'Gapminder data for %d' % negara
-
-# Make a slider object: slider
-str_list = data.index.tolist()
-slider = Slider(start=0, end=len(str_list)-1, value=0, step=1, title="Negara")
-slider.on_change('value',update_plot)
 
 # Make dropdown menu for x and y axis
 # Create a dropdown Select widget for the x data: x_select
@@ -94,5 +83,5 @@ y_select = Select(
 y_select.on_change('value', update_plot)
     
 # Create layout and add to current document
-layout = row(widgetbox(slider, x_select, y_select), plot)
+layout = row(widgetbox(x_select, y_select), plot)
 curdoc().add_root(layout)
