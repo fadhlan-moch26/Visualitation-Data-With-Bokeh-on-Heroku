@@ -51,6 +51,11 @@ def make_plot(src, feature):
 
     p.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src)
     
+    tooltips = [
+            ('Date','$x'),
+            ('Total', '$y'),
+           ]
+    
     p.add_tools(HoverTool(tooltips=tooltips))
 
     return p
