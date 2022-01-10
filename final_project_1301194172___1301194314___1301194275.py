@@ -70,19 +70,19 @@ def update_feature(attr, old, new):
 
     src.data.update(new_src.data)
 
-country_selection = CheckboxGroup(labels=lokasi, active = [0])
-country_selection.on_change('active', update_country)
+lokasi_selection = CheckboxGroup(labels=lokasi, active = [0])
+lokasi_selection.on_change('active', update_country)
 
 feature_select = Select(options = col_list[2:], value = 'Total Cases', title = 'Feature Select')
 feature_select.on_change('value', update_feature)
 
-initial_country = [country_selection.labels[i] for i in country_selection.active]
+initial_country = [lokasi_selection.labels[i] for i in lokasi_selection.active]
 
 src = make_dataset(initial_country, feature_select.value)
 
 p = make_plot(src, feature_select.value)
 
-controls = WidgetBox(feature_select, country_selection)
+controls = WidgetBox(feature_select, lokasi_selection)
 
 # Create a row layout
 layout = row(controls, p)
