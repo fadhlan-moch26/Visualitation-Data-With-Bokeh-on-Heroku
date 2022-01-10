@@ -50,6 +50,8 @@ def make_plot(src, feature):
             x_axis_label = 'Date', y_axis_label = 'Feature Selected')
 
     p.multi_line('x', 'y', color = 'color', legend_field = 'label', line_width = 2, source = src)
+    
+    p.add_tools(HoverTool(tooltips=tooltips))
 
     return p
 
